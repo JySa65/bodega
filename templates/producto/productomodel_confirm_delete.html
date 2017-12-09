@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+
+{% block context %}
+<section>
+	<h2>Esta Seguro que dease eliminar la empresa {{ object.nombre }}</h2>
+	<form method="POST">{% csrf_token %}
+		<div>
+			<ul>
+				<li><h4>Rif: {{ object.tipo_rif }}-{{ object.rif }}</h4></li>
+				<li><h4>Nombre: {{ object.nombre }}</h4></li>
+				<li><h4>Direccion: {{ object.direccion }}</h4></li>
+			</ul>
+		</div>
+		<div>
+			<button type="submit" class="btn blue">Aceptar</button>
+			<a href="{% url 'producto:list-producto' %}" class="btn red">Volver</a>
+		</div>
+	</form>
+</section>
+{% endblock %}

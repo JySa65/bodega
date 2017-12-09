@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+{% block context %}
+<script>
+window.addEventListener("load", function (arg) {
+	$('.carousel.carousel-slider').carousel(
+	{
+		fullWidth: true,
+		duration: 100,
+	}
+	);
+
+	function autoplay() {
+		$('.carousel').carousel('next');
+		setTimeout(autoplay, 4500);
+	}
+
+	autoplay()
+});
+</script>
+<div class="carousel carousel-slider center" data-indicators="true">
+	<a class="carousel-item" href="#one!"><img src=""></a>
+	
+</div>
+
+
+
+
+
+
+
+{% endblock %}

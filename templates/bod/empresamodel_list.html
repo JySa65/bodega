@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+{% block context %}
+
+<section>
+	<table>
+		<thead>
+			<tr>
+				<th>Rif</th>
+				<th>Nombre</th>
+				<th>Direccion</th>
+				<th>Opciones</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for object in object_list %}
+			<tr>
+				<td>{{ object.tipo_rif }}-{{ object.rif }}</td>
+				<td><a href="{% url 'bodega:detail-empresa' object.pk %}">{{ object.nombre }}</a></td>
+				<td>{{ object.direccion }}</td>
+				<td><a href="{% url 'bodega:detail-empresa' object.pk %}">Ver</a> | <a href="{% url 'bodega:update-empresa' object.pk %}">Actualizar</a> | <a href="{% url 'bodega:delete-empresa' object.pk %}">Eliminar</a></td>
+			</tr>
+			{% endfor %}
+		</tbody>
+		<tfoot>
+			<tr>
+				<th>Rif</th>
+				<th>Nombre</th>
+				<th>Direccion</th>
+			</tr>
+		</tfoot>	
+	</table>
+</section>
+
+
+{% endblock %}

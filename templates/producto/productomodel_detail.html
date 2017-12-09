@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+{% block context %}
+
+<section>
+	<table>
+		<thead>
+			<tr>
+				<th>Codigo</th>
+				<th>Nombre Del Producto</th>
+				<th>Categoria</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td>{{ object.codigo }}</td>
+				<td>{{ object.producto }}</td>
+				<td>{{ object.categoria }}</td>
+			</tr>
+
+		</tbody>	
+	</table>
+	<div>
+		<a href="{% url 'producto:list-producto' %}" class="btn red">Volver</a>
+	</div>
+</section>
+
+
+{% endblock %}

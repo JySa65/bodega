@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+
+{% block js %}
+<!--<script src= "{% static '/js/bloodhound.min.js' %}"></script>
+<script src= "{% static '/js/typeahead.jquery.min.js' %}"></script>-->
+<script src= "https://twitter.github.io/typeahead.js/js/handlebars.js"></script>
+<script src= "{% static '/js/typeahead.bundle.min.js' %}"></script>
+<script>
+	var dir_empresa = "{% url 'pedido:buscar-empresa' %}"
+</script>
+<script src= "{% static '/js/buscador.js' %}"></script>
+{% endblock %}
+
+{% block context %}
+<section>
+	<form method="POST">{% csrf_token %}
+		{% for i in form %}
+		<div>
+			{{ i.label }}
+			{{ i }}
+			{{ i.error }}
+		</div>
+		{% endfor %}
+		<div>
+			<button type="submit" class="btn blue">Aceptar</button>
+			<a href="{% url 'login:index' %}" class="btn red">Volver</a>
+		</div>
+	</form>
+</section>
+{% endblock %}

@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+{% block context %}
+
+<section>
+	<table>
+		<thead>
+			<tr>
+				<th>Codigo</th>
+				<th>Nombre Del Producto</th>
+				<th>Categoria</th>
+				<th>Opciones</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for object in object_list %}
+			<tr>
+				<td>{{ object.codigo }}</td>
+				<td><a href="{% url 'producto:detail-producto' object.pk %}">{{ object.producto }}</a></td>
+				<td>{{ object.categoria }}</td>
+				<td><a href="{% url 'producto:detail-producto' object.pk %}">Ver</a> | <a href="{% url 'producto:update-producto' object.pk %}">Actualizar</a> | <a href="{% url 'producto:delete-producto' object.pk %}">Eliminar</a></td>
+			</tr>
+			{% endfor %}
+		</tbody>
+		<tfoot>
+			<tr>
+				<th>Codigo</th>
+				<th>Nombre Del Producto</th>
+				<th>Categoria</th>
+				<th>Opciones</th>
+			</tr>
+		</tfoot>	
+	</table>
+</section>
+
+
+{% endblock %}

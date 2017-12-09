@@ -1,0 +1,106 @@
+nav ul a,
+nav .brand-logo {
+  color: #444;
+}
+
+p {
+  line-height: 2rem;
+}
+
+
+.parallax-container {
+  min-height: 300px;
+  line-height: 0;
+  height: auto;
+  color: rgba(255,255,255,.9);
+}
+
+.parallax-container img {
+  width: 100%;
+}
+
+@media only screen and (max-width : 992px) {
+  .parallax-container .section {
+    position: absolute;
+    top: 40%;
+  }
+  #index-banner .section {
+    top: 10%;
+  }
+}
+
+@media only screen and (max-width : 600px) {
+  #index-banner .section {
+    top: 0;
+  }
+}
+
+
+footer.page-footer {
+  margin: 0;
+}
+
+.bajar{
+  margin-top:13px
+}
+
+.button-collapse{
+  display: inline-block !important;
+}
+
+::-webkit-scrollbar-track
+{
+  -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.9);
+  background-color: #fff;
+}
+
+::-webkit-scrollbar
+{
+  width: 0px;
+  background-color: #fff;
+}
+
+::-webkit-scrollbar-thumb
+{
+  border-radius: 0px;
+  background-color: #fff;
+  
+}
+
+.login_margin
+{
+  margin-top: 12%;
+}
+
+input, select{
+  color:black;
+}
+
+.input-field label {
+ color: #1976d2 !important;
+}
+/* label focus color */
+.input-field input[type]:focus + label {
+ color: #1976d2!important;
+}
+/* label underline focus color */
+.input-field input[type]:focus {
+ border-bottom: 1px solid #1976d2!important;
+ box-shadow: 0 1px 0 0 #1976d2!important;
+}
+
+/* valid color 
+.input-field input[type].valid {
+ border-bottom: 1px solid #000!important;
+ box-shadow: 0 1px 0 0 #000!important;
+}
+/* invalid color 
+.input-field input[type].invalid {
+ border-bottom: 1px solid #000!important;
+ box-shadow: 0 1px 0 0 #000!important;
+}
+/* icon prefix focus color 
+.input-field .prefix.active {
+ color: #000!important;
+}
+*/
