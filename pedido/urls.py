@@ -4,6 +4,7 @@ from pedido.views import *
 urlpatterns = [
     url(r'^create/$', PedidoCreateView.as_view(), name='create-pedido'),
     url(r'^buscar/empresa/$', BuscadorEmpresaView.as_view(), name='buscar-empresa'),
+    url(r'^buscar/producto/$', BuscadorProductoView.as_view(), name='buscar-producto'),
     
 ]
 

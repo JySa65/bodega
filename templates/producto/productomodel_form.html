@@ -1,20 +1,44 @@
 {% extends "base.html" %}
 {% load staticfiles %}
 
+{% block js %}
+<script>
+    window.addEventListener("load", function (e) {
+        document.getElementsByClassName("id_codigo").onkeypress = soloNumeros;
+    });
+    function soloNumeros(e){
+        var key = e.which | e.keyCode;
+	return (key >= 48 && key <= 57);
+    }
+</script>
+{% endblock %}
 {% block context %}
 <section>
-	<form method="POST">{% csrf_token %}
-		{% for i in form %}
-		<div>
-			{{ i.label }}
-			{{ i }}
-			{{ i.error }}
-		</div>
-		{% endfor %}
-		<div>
-			<button type="submit" class="btn blue">Aceptar</button>
-			<a href="{% url 'login:index' %}" class="btn red">Volver</a>
-		</div>
-	</form>
+    <br>
+    <form method="POST">
+        <div class="row container">
+            {% csrf_token %}
+            {% for i in form %}
+            <div class='col 
+                 {% if i.label == "Codigo" %}
+                 s4 center
+                 {% elif i.label == "Producto" %}
+                 s8
+                 {% else %}
+                 s12
+                 {% endif %}
+                 '>
+                {{ i.label }}
+                {{ i }}
+                {{ i.error }}
+            </div>
+            {% endfor %}
+            <div class="col s12">
+                <br>
+                <button type="submit" class="btn blue right">Aceptar</button>
+                <a href="{% url 'login:index' %}" class="btn red">Volver</a>
+            </div>
+        </div>
+    </form>
 </section>
 {% endblock %}

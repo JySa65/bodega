@@ -2,8 +2,8 @@ db.sqlite3
 *.log
 *.pyc
 *.vscode
-/bod/migrations/
-/pedido/migrations/
-/producto/migrations/
+/bod/migrations
+/pedido/migrations
+/producto/migrations
 Pipfile
 Procfile

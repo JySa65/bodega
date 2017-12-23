@@ -82,3 +82,13 @@ class VentaModel(models.Model):
 		return str(self.cantidad)
     
 
+class CalculoModel(models.Model):
+        producto = models.ForeignKey(
+		ProductoModel,
+		on_delete=models.CASCADE)
+        n_compra = models.IntegerField(default=0)
+        n_venta = models.IntegerField(default=0)
+
+        def __str__(self):
+                return str(self.producto)
+        

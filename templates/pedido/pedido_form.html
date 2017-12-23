@@ -2,30 +2,88 @@
 {% load staticfiles %}
 
 {% block js %}
-<!--<script src= "{% static '/js/bloodhound.min.js' %}"></script>
-<script src= "{% static '/js/typeahead.jquery.min.js' %}"></script>-->
+<style>
+    #id_empresa, .autoc{
+        margin-bottom: 0px !important;
+    }
+    .lbchb{
+        padding-left: 0px;
+    }
+</style>
 <script src= "{% static '/js/handlebars.js' %}"></script>
 <script src= "{% static '/js/typeahead.bundle.min.js' %}"></script>
 <script>
-	var dir_empresa = "{% url 'pedido:buscar-empresa' %}"
+    var dir_empresa = "{% url 'pedido:buscar-empresa' %}"
+            var dir_producto = "{% url 'pedido:buscar-producto' %}"
 </script>
 <script src= "{% static '/js/buscador.js' %}"></script>
 {% endblock %}
 
 {% block context %}
 <section>
-	<form method="POST" id="form_pedido">{% csrf_token %}
-		{% for i in form %}
-		<div>
-			{{ i.label }}
-			{{ i }}
-			{{ i.errors }}
-		</div>
-		{% endfor %}
-		<div>
-			<button type="submit" class="btn blue">Aceptar</button>
-			<a href="{% url 'login:index' %}" class="btn red">Volver</a>
-		</div>
-	</form>
+    <br>
+    <form method="POST" id="form_pedido">
+        <div class="row container">{% csrf_token %}{% for i in form %}
+            <div class='col 
+                 {% if i.label == "Codigo" %}s4 center
+                 {% elif i.label == "Fecha" %}s8
+                 {% else %}s12
+                 {% endif %}
+                 '>
+                {{ i.label }}{{ i }}{{ i.errors }}
+            </div>
+            {% if i.label == "Empresa" %}<div class="col s12" style="margin-bottom: 20px;"></div>{% endif %}{% endfor %}
+            <div class="col s12 no-padding">
+                <div class="col s1 center">Cant</div>
+                <div class="col s4">
+                    Producto
+                </div>
+                <div class="col s1 center">E</div>
+                <div class="col s3">
+                    Precio Compra
+                </div>
+                <div class="col s3">
+                    Precio Venta
+                </div>
+            </div>
+            <div class="col s12" id="productos">
+
+            </div>
+            <div id="copiaProd" class="col s12 hide">
+                <div class="col s1 center">
+                    <input type="text" name="cant[]" id="id_cant" required class="solon" disabled>
+                </div>
+                <div class="col s4">
+                    <input type="text" name="producto[]" maxlength="100" required id="id_producto" class="autoc" autocomplete="off">
+                </div>
+                <div class="col s1 center">
+                    <p>
+                        <input type="checkbox" name="exento[]" id="id_exento" disabled>
+                        <label class="lbchb" for="exc1"></label>
+                    </p>
+                </div>
+                <div class="col s3">
+                    <input type="text" name="precioc[]" maxlength="100" required id="id_precioc" class="solon" autocomplete="off" disabled>
+                </div>
+                <div class="col s3">
+                    <input type="text" name="preciov[]" maxlength="100" required id="id_preciov" class="solon" autocomplete="off" disabled>
+                </div>
+            </div>
+            <div class="col s12">
+                <br>
+                <button type="submit" class="btn blue right">Aceptar</button>
+                <a href="{% url 'login:index' %}" class="btn red">Volver</a>
+            </div>
+        </div>
+    </form>
+    <div id="modal1" class="modal modal-fixed-footer">
+        <div class="modal-content">
+            <h4>Modal Header</h4>
+            <p>A bunch of text</p>
+        </div>
+        <div class="modal-footer">
+            <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat ">Agree</a>
+        </div>
+    </div>
 </section>
 {% endblock %}

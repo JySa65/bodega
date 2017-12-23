@@ -16,7 +16,7 @@ class PedidoCreateView(CreateView):
 	second_form_class = forms.EmpresaModel
 	template_name = 'pedido/pedido_form.html'
 
-	"""
+
 	def post(self, *args, **kwargs):
 		message = ""
 		form = self.form_class(self.request.POST)
@@ -27,10 +27,9 @@ class PedidoCreateView(CreateView):
 			message = "Creado Exitosamente"
 		else:
 			message = "Este Codigo Ya Existe"
-			print form
 			return render(self.request, self.template_name, {'form["codigo"]':2323})
 		return HttpResponse(message)
-	"""
+
 
 class BuscadorEmpresaView(TemplateView):
 	model = models.EmpresaModel
@@ -43,7 +42,19 @@ class BuscadorEmpresaView(TemplateView):
 		for i in empresa:
 			data[acum]={"pk": i.pk, "nombre": i.nombre, "rif": i.rif}
 			acum+=1
+		return JsonResponse(data)
 
-			return JsonResponse(data)
+class BuscadorProductoView(TemplateView):
+	model = models.ProductoModel
 
+	def get(self, *args, **kwargs):
+		palabra = self.request.GET.get("name")
+		empresa = self.model.objects.filter(producto__contains = str(palabra))
+		data = {}
+		acum = 0
+		for i in empresa:
+                        #upc: ultimo precio compra - venta
+			data[acum]={"pk": i.pk, "codigo": i.codigo, "nombre": i.producto, "upc": "", "upv": "", "exento": ""}
+			acum+=1
+		return JsonResponse(data)
 

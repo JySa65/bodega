@@ -16,10 +16,17 @@ class ProductosDetailView(LoginRequiredMixin, DetailView):
 
 class ProductosCreateView(LoginRequiredMixin, CreateView):
 	model = models.ProductoModel
+	second_model = models.CalculoModel
 	form_class = forms.ProductoForm
 	success_url = reverse_lazy('producto:list-producto')
 	template_name = 'producto/productomodel_form.html'
 
+	def form_valid(self, form):
+                _object = form.save()
+                calculo = self.second_model(producto=_object)
+                calculo.save()
+                return super(ProductosCreateView, self).form_valid(form)
+                
 class ProductosUpdateView(LoginRequiredMixin, UpdateView):
 	model = models.ProductoModel
 	form_class = forms.ProductoForm
