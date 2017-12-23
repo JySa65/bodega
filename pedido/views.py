@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView, TemplateView
-from django.shortcuts import render
+from django.shortcuts import render,  get_object_or_404
 from django.http import HttpResponse, JsonResponse
 from django.core import serializers
 from django.core.urlresolvers import reverse_lazy
@@ -11,20 +11,39 @@ from login.views import LoginRequiredMixin
 
 class PedidoCreateView(CreateView):
 	model = models.FacturaModel
+	second_model = models.EmpresaModel
 	form_class = forms.FacturaForm
+	second_form_class = forms.EmpresaModel
 	template_name = 'pedido/pedido_form.html'
+
+	"""
+	def post(self, *args, **kwargs):
+		message = ""
+		form = self.form_class(self.request.POST)
+		empresa = self.second_model.objects.get(pk=self.request.POST.get("empresa"))
+		cod = self.model.objects.filter(codigo=str(self.request.POST.get("codigo"))).first()
+		if not cod:
+			sav = self.model.objects.create(codigo=self.request.POST.get("codigo"), fecha=self.request.POST.get("fecha"), empresa=empresa)
+			message = "Creado Exitosamente"
+		else:
+			message = "Este Codigo Ya Existe"
+			print form
+			return render(self.request, self.template_name, {'form["codigo"]':2323})
+		return HttpResponse(message)
+	"""
 
 class BuscadorEmpresaView(TemplateView):
 	model = models.EmpresaModel
-	
+
 	def get(self, *args, **kwargs):
 		palabra = self.request.GET.get("name")
 		empresa = self.model.objects.filter(nombre__contains = str(palabra))
 		data = {}
 		acum = 0
 		for i in empresa:
-			data[acum] = [{"pk": i.pk, "nombre": i.nombre, "rif": i.rif}]
+			data[acum]={"pk": i.pk, "nombre": i.nombre, "rif": i.rif}
 			acum+=1
-		return JsonResponse(data)
+
+			return JsonResponse(data)
 
 

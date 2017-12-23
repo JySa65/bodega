@@ -104,3 +104,7 @@ input, select{
  color: #000!important;
 }
 */
+
+.carousel-item img{
+  height: 400px;
+}

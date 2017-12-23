@@ -18,15 +18,25 @@ window.addEventListener("load", function (arg) {
 	autoplay()
 });
 </script>
-<div class="carousel carousel-slider center" data-indicators="true">
-	<a class="carousel-item" href="#one!"><img src=""></a>
-	
-</div>
 
-
-
-
-
-
-
+<style>
+.carousel-item img{
+	height: 500px;
+}
+.pfa{
+	text-shadow: 1px 1px 2px black;
+}
+</style>
+<section class="row">
+	<div class="container center" style="margin-top: 4px;">
+		<div class="col s12 no-padding">
+			<div class="carousel carousel-slider center" data-indicators="true" >
+				<a class="carousel-item" href="#one!"><img src="{% static '/image/image1.jpg' %}"></a>
+				<a class="carousel-item" href="#one!"><img src="{% static '/image/image2.jpg' %}"></a>
+				<a class="carousel-item" href="#one!"><img src="{% static '/image/image3.jpg' %}"></a>
+				<a class="carousel-item" href="#one!"><img src="{% static '/image/image4.jpg' %}"></a>
+			</div>
+		</div>
+	</div>
+</section>
 {% endblock %}

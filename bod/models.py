@@ -14,7 +14,7 @@ class EmpresaModel(models.Model):
 			('G','G'),
 		)
 	tipo_rif = models.CharField(max_length=10, null=False, blank=False, choices=tipo)
-	rif = models.CharField(max_length=10, null=False, blank=False)
+	rif = models.CharField(max_length=10, null=False, blank=False, unique=True)
 	nombre = models.CharField(max_length=100, null=False, blank=False)
 	direccion = models.TextField()
 
@@ -28,13 +28,12 @@ class CategoriaModel(models.Model):
 		return str(self.departamento)
 
 class FacturaModel(models.Model):
-	codigo = models.CharField(max_length=10, null=False, blank=False)
+	codigo = models.CharField(max_length=10, null=False, blank=False, unique=True)
 	fecha = models.DateField()
 	empresa = models.ForeignKey(
         EmpresaModel,
         on_delete=models.CASCADE,
     )
-
 	def __str__(self):
 		return str(self.codigo)
 
@@ -42,7 +41,7 @@ class ProductoModel(models.Model):
 	codigo = models.CharField(max_length=50, null=False, blank=False)
 	producto = models.CharField(max_length=100, null=False, blank=False)
 	categoria = models.ForeignKey(
-		CategoriaModel,
+		CategoriaModel, null=False, blank=False,
 		on_delete=models.CASCADE,
 		)
 	

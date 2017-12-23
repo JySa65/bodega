@@ -30,7 +30,6 @@ class FacturaForm(forms.ModelForm):
 				  'empresa',)
         widgets = {
             'fecha': DateInput(format = '%Y-%m-%d'),
-
         }
     
 class ProductoForm(forms.ModelForm):

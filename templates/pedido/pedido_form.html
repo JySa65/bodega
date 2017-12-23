@@ -4,7 +4,7 @@
 {% block js %}
 <!--<script src= "{% static '/js/bloodhound.min.js' %}"></script>
 <script src= "{% static '/js/typeahead.jquery.min.js' %}"></script>-->
-<script src= "https://twitter.github.io/typeahead.js/js/handlebars.js"></script>
+<script src= "{% static '/js/handlebars.js' %}"></script>
 <script src= "{% static '/js/typeahead.bundle.min.js' %}"></script>
 <script>
 	var dir_empresa = "{% url 'pedido:buscar-empresa' %}"
@@ -14,12 +14,12 @@
 
 {% block context %}
 <section>
-	<form method="POST">{% csrf_token %}
+	<form method="POST" id="form_pedido">{% csrf_token %}
 		{% for i in form %}
 		<div>
 			{{ i.label }}
 			{{ i }}
-			{{ i.error }}
+			{{ i.errors }}
 		</div>
 		{% endfor %}
 		<div>
