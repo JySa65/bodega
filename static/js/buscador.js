@@ -1,8 +1,21 @@
 function soloNumeros(e) {
     var key = e.which | e.keyCode;
-    return (key >= 48 && key <= 57);
+    var inp = $(e.target);
+    if (inp.attr("id").indexOf("precioc") > 0 || inp.attr("id").indexOf("cant") > 0) {
+        var prec = parseFloat(inp.val() + e.key);
+        var cant = parseInt(inp.parent().parent().find("[name='cant[]']").val()) || 1;
+        if (!isNaN(prec)) {
+            prec = (prec * cant * 1.12 * 1.30).toFixed(0);
+            $("#" + inp.attr("id").replace("oc", "ov")).val(prec);
+        }
+    }
+    return (key >= 48 && key <= 57 || key == 8);
 }
-var cpd = 1;
+function precioVenta(e) {
+
+}
+//Contador - id productos
+var cpd = 1, ipd = [];
 function nuevoProducto() {
     var div = $("#copiaProd").clone();
     var sf = div.find("input");
@@ -31,14 +44,20 @@ function nuevoProducto() {
                 }
             }).bind('typeahead:select', function (ev, suggestion) {
                 var tt = $(this);
-                tt.attr("id-select", suggestion.pk);
-                tt.parents(".s12").find("input").each(function(e){
-                    this.removeAttribute("disabled");
-                });
-                nuevoProducto();
+                if (ipd.indexOf(suggestion.pk) < 0) {
+                    ipd.push(suggestion.pk);
+                    tt.attr("id-select", suggestion.pk);
+                    tt.parents(".s12").find("input").each(function (e) {
+                        this.removeAttribute("disabled");
+                    });
+                    nuevoProducto();
+                } else {
+                    //ALERTA YA EXISTE
+                    tt.val("");
+                }
             });
-        }else if(t.attr("id") == "id_exento"){
-            
+        } else if (t.attr("id") == "id_exento") {
+            div.find("label").attr("for", t.attr("id") + cpd);
         }
         t.attr("id", t.attr("id") + cpd);
     });
@@ -66,7 +85,7 @@ var productos = new Bloodhound({
     }
 });
 
-$('#id_empresa').typeahead({
+$('#id_empresa2').typeahead({
     hint: true,
     highlight: true,
     minLength: 1
@@ -86,39 +105,8 @@ $('#id_empresa').typeahead({
         suggestion: Handlebars.compile('<div><strong>{{nombre}}</strong> - {{rif}}</div>')
     }
 }).bind('typeahead:select', function (ev, suggestion) {
-    $(this).attr("id-select", suggestion.pk);
+    $('#id_empresa').val(suggestion.pk);
 });
-/*
- $('#id_producto').typeahead({
- hint: true,
- highlight: true,
- minLength: 1
- }, {
- name: 'empresas',
- source: productos,
- display: 'nombre',
- itemSelected: function (item) {
- return item;
- },
- templates: {
- empty: [
- '<div class="empty-message">',
- 'unable to find any Best Picture winners that match the current query',
- '</div>'
- ].join('\n'),
- suggestion: Handlebars.compile('<div>{{codigo}} - <strong>{{nombre}}</strong> </div>')
- }
- }).bind('typeahead:select', function (ev, suggestion) {
- $(this).attr("id-select", suggestion.pk);
- var sf = this.parentElement.parentElement.parentElement.getElementsByClassName("solon");
- for (var i = 0; i < sf.length; i++) {
- sf[i].onkeypress = soloNumeros;
- sf[i].removeAttribute("disabled");
- document.getElementsByTagName("input");
- }
- debugger;
- });
- */
 document.getElementById("form_pedido").onsubmit = function (e) {
-    $('#id_empresa').val($('#id_empresa').attr("id-select"));
+    //$('#id_empresa').val($('#id_empresa').attr("id-select"));
 };

@@ -1,57 +1,51 @@
 {% extends "base.html" %}
 {% load staticfiles %}
-
 {% block js %}
 <style>
-    #id_empresa, .autoc{
+    .autoc{
         margin-bottom: 0px !important;
     }
     .lbchb{
-        padding-left: 0px;
+        padding: 0px 8px !important;
     }
 </style>
 <script src= "{% static '/js/handlebars.js' %}"></script>
 <script src= "{% static '/js/typeahead.bundle.min.js' %}"></script>
 <script>
-    var dir_empresa = "{% url 'pedido:buscar-empresa' %}"
-            var dir_producto = "{% url 'pedido:buscar-producto' %}"
+    var dir_empresa = "{% url 'pedido:buscar-empresa' %}";
+    var dir_producto = "{% url 'pedido:buscar-producto' %}";
 </script>
 <script src= "{% static '/js/buscador.js' %}"></script>
 {% endblock %}
-
 {% block context %}
 <section>
     <br>
     <form method="POST" id="form_pedido">
         <div class="row container">{% csrf_token %}{% for i in form %}
-            <div class='col 
+            <div class='col
                  {% if i.label == "Codigo" %}s4 center
                  {% elif i.label == "Fecha" %}s8
-                 {% else %}s12
-                 {% endif %}
-                 '>
-                {{ i.label }}{{ i }}{{ i.errors }}
+                 {% else %}s12{% endif %}'>
+                <b>{{ i.label }}</b>
+                {% if i.label == "Empresa" %}
+                <input type="hidden" name="empresa" id="id_empresa" class="hide">
+                <input type="text" name="empresa2" maxlength="100" required id="id_empresa2" class="autoc"><div>
+                <div class="col s12" style="margin-bottom: 20px;">
+                {% else %}{{ i }}{% endif %}
+                {{ i.errors }}
             </div>
-            {% if i.label == "Empresa" %}<div class="col s12" style="margin-bottom: 20px;"></div>{% endif %}{% endfor %}
-            <div class="col s12 no-padding">
+            {% if i.label == "Empresa" %}{% endif %}{% endfor %}
+            <div class="col s12 no-padding center">
                 <div class="col s1 center">Cant</div>
-                <div class="col s4">
-                    Producto
-                </div>
+                <div class="col s4">Producto</div>
                 <div class="col s1 center">E</div>
-                <div class="col s3">
-                    Precio Compra
-                </div>
-                <div class="col s3">
-                    Precio Venta
-                </div>
+                <div class="col s3">Precio Unitario de Compra</div>
+                <div class="col s3">Precio Total de Venta</div>
             </div>
-            <div class="col s12" id="productos">
-
-            </div>
-            <div id="copiaProd" class="col s12 hide">
+            <div class="col s12 no-padding" id="productos"></div>
+            <div id="copiaProd" class="col s12  no-padding hide">
                 <div class="col s1 center">
-                    <input type="text" name="cant[]" id="id_cant" required class="solon" disabled>
+                    <input type="text" name="cant[]" id="id_cant" required class="solon" value="1" disabled>
                 </div>
                 <div class="col s4">
                     <input type="text" name="producto[]" maxlength="100" required id="id_producto" class="autoc" autocomplete="off">
@@ -59,11 +53,12 @@
                 <div class="col s1 center">
                     <p>
                         <input type="checkbox" name="exento[]" id="id_exento" disabled>
-                        <label class="lbchb" for="exc1"></label>
+                        <label class="lbchb" for="exc"></label>
                     </p>
                 </div>
                 <div class="col s3">
                     <input type="text" name="precioc[]" maxlength="100" required id="id_precioc" class="solon" autocomplete="off" disabled>
+                    <input type="hidden" class="hide" value="">
                 </div>
                 <div class="col s3">
                     <input type="text" name="preciov[]" maxlength="100" required id="id_preciov" class="solon" autocomplete="off" disabled>
