@@ -16,7 +16,7 @@ class PedidoCreateView(CreateView):
 	second_form_class = forms.EmpresaModel
 	template_name = 'pedido/pedido_form.html'
 
-	"""
+
 	def post(self, *args, **kwargs):
 		message = ""
 		form = self.form_class(self.request.POST)
@@ -30,7 +30,7 @@ class PedidoCreateView(CreateView):
 			print form
 			return render(self.request, self.template_name, {'form["codigo"]':2323})
 		return HttpResponse(message)
-	"""
+
 
 class BuscadorEmpresaView(TemplateView):
 	model = models.EmpresaModel
