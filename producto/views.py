@@ -12,7 +12,7 @@ class ProductosListView(LoginRequiredMixin, ListView):
 
 class ProductosDetailView(LoginRequiredMixin, DetailView):
 	model = models.ProductoModel
-	template_name = 'producto/productomodel_detail.html' 
+	template_name = 'producto/productomodel_detail.html'
 
 class ProductosCreateView(LoginRequiredMixin, CreateView):
 	model = models.ProductoModel
@@ -21,12 +21,17 @@ class ProductosCreateView(LoginRequiredMixin, CreateView):
 	success_url = reverse_lazy('producto:list-producto')
 	template_name = 'producto/productomodel_form.html'
 
+	def get_context_data(self, **kwargs):
+	    context = super(ProductosCreateView, self).get_context_data(**kwargs)
+	    context["datalist"] = models.CategoriaModel.objects.all()
+	    return context
+
 	def form_valid(self, form):
                 _object = form.save()
                 calculo = self.second_model(producto=_object)
                 calculo.save()
                 return super(ProductosCreateView, self).form_valid(form)
-                
+
 class ProductosUpdateView(LoginRequiredMixin, UpdateView):
 	model = models.ProductoModel
 	form_class = forms.ProductoForm

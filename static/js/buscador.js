@@ -1,35 +1,45 @@
+
 function keyDown(e) {
-    var r = false, key = e.which || e.keyCode;
-    //[LEFT - DOWN]
-    if (key >= 37 && key <= 40) {
-        r = !r;
+    var key = e.which || e.keyCode,  t = true;
+    var sKey = String.fromCharCode(key);
+    if (key > 36 && key < 41 || key > 7 && key < 10 || key == 13 || key > 111 && key < 124) {
+        return t;
     }
-    //BackSpace, Tab, Enter
-    if (key == 8 || key == 9 || key == 13) {
-        r = !r;
+    if (e.target.expRgl.test(sKey)){
+        return t;
     }
-    //SPACE
-    if (key == 32) {
-        r = !r;
+    return !t;
+}
+function keyPress(e) {
+    var key = e.which || e.keyCode, t = true;
+    var sKey = String.fromCharCode(key);
+    if (e.target.expRgl.test(sKey)){
+        return t;
     }
-    //[F1 - F12]
-    if (key >= 112 && key <= 123) {
-        r = !r;
-    }
-    //[0 - 9]
-    if (key >= 48 && key <= 57) {
-        r = !r;
-    }
-    return r;
+    return !t;
 }
 function soloMonto(e) {
     var key = e.which || e.keyCode;
     return (key >= 48 && key <= 57 || key >= 37 && key <= 40 || key == 188 || key == 8);
 }
+
 function calcularTotal(e) {
+    var key = e.which || e.keyCode;
+    debugger;
     console.log(e.type);
+    console.log(key);
     return true;
     /*
+    //[0 - 9]
+    if (key >= 48 && key <= 57) {
+        r = !r;
+    }
+    return r;
+
+
+
+
+
      if (id.indexOf("precioc") > 0 || id.indexOf("cant") > 0) {
      var prec, cant, dt = t.parent().parent();
      if (!isNaN(e.key)) {
@@ -40,7 +50,7 @@ function calcularTotal(e) {
      prec = (prec * cant).toFixed(0);
      dt.find("[name='preciov[]']").val(prec);
      }
-     }*/
+ }*/
 }
 //Contador - id productos
 var cpd = 1, ipd = [];
@@ -51,8 +61,8 @@ function nuevoProducto() {
         var t = $(this);
         if (t.hasClass("solon")) {
             t.keydown(calcularTotal);
-            t.keyup(calcularTotal);
             t.keypress(calcularTotal);
+            t.keyup(calcularTotal);
         }
         if (t.attr("id") == "id_producto") {
             t.typeahead({
@@ -68,7 +78,7 @@ function nuevoProducto() {
                 },
                 templates: {
                     empty: [
-                        '<div class="tt-suggestion">unable to find any Best Picture winners that match the current query</div>'
+                    '<div class="tt-suggestion">unable to find any Best Picture winners that match the current query</div>'
                     ].join('\n'),
                     suggestion: Handlebars.compile('<div>{{codigo}} - <strong>{{nombre}}</strong></div>')
                 }
@@ -127,13 +137,14 @@ $('#id_empresa2').typeahead({
     },
     templates: {
         empty: [
-            '<div class="empty-message">',
-            'unable to find any Best Picture winners that match the current query',
-            '</div>'
+        '<div class="empty-message">',
+        'unable to find any Best Picture winners that match the current query',
+        '</div>'
         ].join('\n'),
         suggestion: Handlebars.compile('<div><strong>{{nombre}}</strong> - {{rif}}</div>')
     }
 }).bind('typeahead:select', function (ev, suggestion) {
     $('#id_empresa').val(suggestion.pk);
 });
+
 nuevoProducto();
